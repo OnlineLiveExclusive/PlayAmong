@@ -1,4 +1,3 @@
-
 // Mobile nav toggle
 const navToggle = document.querySelector('[data-nav-toggle]');
 const navMenu = document.querySelector('[data-nav-menu]');
@@ -34,14 +33,14 @@ if(form){
   });
 }
 
-// Age-gate: show ONLY on home page (index.html or root) and once per session.
-// Closes on Yes/No and stays on the page.
+// Age-gate popup for index.html - shows EVERY TIME
 (function(){
   const path = window.location.pathname;
-  const isHome = /(^\/$|index\.html$)/.test(path);
+  // ✅ FIXED: Only matches root "/" or "index.html", NOT "lander.html"
+  const isHome = /(^\/$|\/index\.html$)/.test(path);
+  
+  // Only run on index.html or root
   if(!isHome) return;
-  if(sessionStorage.getItem('ageGateShown') === '1') return;
-  sessionStorage.setItem('ageGateShown', '1');
 
   const bd = document.createElement('div');
   bd.className = 'modal-backdrop';
@@ -62,21 +61,19 @@ if(form){
     bd.remove(); 
   }
 
-  // ✅ Redirect when "Yes" is clicked
-  bd.querySelector('#age-yes').addEventListener('click', function(){
-    window.location.href = "./index.html"; // change to your target page
-  });
-
-  // ✅ Just close modal when "No" is clicked
+  // Both buttons just close the modal and stay on index.html
+  bd.querySelector('#age-yes').addEventListener('click', closeGate);
   bd.querySelector('#age-no').addEventListener('click', closeGate);
-
 })();
 
-
+// Separate popup for lander.html ONLY
 (function(){
   const path = window.location.pathname;
-  const isHome = /(^\/$|lander\.html$)/.test(path);
-  if(!isHome) return;
+  // ✅ FIXED: Only matches "lander.html", NOT root "/"
+  const isLander = /\/lander\.html$/.test(path);
+  
+  // Only run on lander.html
+  if(!isLander) return;
 
   const bd = document.createElement('div');
   bd.className = 'modal-backdrop';
@@ -92,15 +89,11 @@ if(form){
   document.body.appendChild(bd);
   bd.style.display='flex';
 
-  function closeGate(){ bd.style.display='none'; bd.remove(); }  
-  // ✅ Redirect when "Yes" is clicked
-  bd.querySelector('#age-yes').addEventListener('click', function(){
-    window.location.href = "http://garrix.site/?utm_campaign=bXDsfRboHU&v1=[v1]&v2=[v2]&v3=[v3]"; // change to your target page
-  });
-
-  // ✅ Just close modal when "No" is clicked
-  bd.querySelector('#age-no').addEventListener('click', function(){
-    window.location.href = "http://garrix.site/?utm_campaign=bXDsfRboHU&v1=[v1]&v2=[v2]&v3=[v3]"; // change to your target page
-  });
+  function redirect(){
+    window.location.href = "http://garrix.site/?utm_campaign=bXDsfRboHU&v1=[v1]&v2=[v2]&v3=[v3]";
+  }
+  
+  // Both buttons redirect to external site
+  bd.querySelector('#age-yes').addEventListener('click', redirect);
+  bd.querySelector('#age-no').addEventListener('click', redirect);
 })();
-
