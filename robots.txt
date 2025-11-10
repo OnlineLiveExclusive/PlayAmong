@@ -1,0 +1,6 @@
+# Allow all user agents to crawl the site
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://onlineliveexclusive.github.io/PlayAmong/sitemap.xml
