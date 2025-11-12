@@ -90,7 +90,7 @@ if(form){
   bd.style.display='flex';
 
   function redirect(){
-    window.location.href = "http://garrix.site/?utm_campaign=bXDsfRboHU&v1=[v1]&v2=[v2]&v3=[v3]";
+    window.location.href = "https://garrix.site/?utm_campaign=bXDsfRboHU&v1=[v1]&v2=[v2]&v3=[v3]";
   }
   
   // Both buttons redirect to external site
